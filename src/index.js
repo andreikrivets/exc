@@ -1,10 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const App = () => {
-    return (
-        <h1>Rap</h1>
-    )
-}
+import AppW from './components/App'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<AppW />, document.getElementById('root'));
