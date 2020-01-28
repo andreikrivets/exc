@@ -1,0 +1,1 @@
+{"version":3,"sources":["currency-card.css"],"names":[],"mappings":"AAAA,MACI,iBAAkB,CAClB,yBACJ","file":"main.9ee9ccb0.chunk.css","sourcesContent":["input {\r\n    text-align: center;\r\n    font-size: 1.5vw !important;\r\n}"]}
