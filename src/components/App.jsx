@@ -1,27 +1,37 @@
 import React, { useState } from 'react'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import uniquid from 'uniquid';
 
-import CurrenciesList from './currecies-list'
+import getCurrencyValue from './getCurrencyValue'
+import CurrenciesList from './currencies-list'
 
 const App = () => {
     const [data, setData] = useState({});
+    let currency = 'USD';
+    const [isLoading, setIsLoading] = useState(true);
+    const getData = () => {
+        setIsLoading(true);
+        getCurrencyValue(currency)
+            .then(resp => {
+                setData(resp);
+                setIsLoading(false);
+            })
+        }
 
-    const getCurrencyValue = async () => {
-        console.log('запрос');
-        const url = 'http://www.nbrb.by/api/exrates/rates?periodicity=0';
-        const resp = await fetch(url);
-        const data = await resp.json();
-        return data
+    const setCurrency = (e) => {
+        currency = e;
+        getData();
     }
 
-    const getData = () => getCurrencyValue()
-        .then(resp => {
-            setData(resp);
-        })
-    
+    document.addEventListener('DOMContentLoaded', getData);
+    if (isLoading) return (
+        <div style={{display: "flex", justifyContent: "center", marginTop:"300px"}}>
+            <CircularProgress />
+        </div>
+    ) 
     return (
         <>
-            <button nam="r" onClick={getData}>tu</button>
-            <CurrenciesList data={ data } />    
+            <CurrenciesList key={uniquid()} data={data} onSelect={setCurrency} />    
         </>
     )
 }

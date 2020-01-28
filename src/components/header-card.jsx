@@ -11,7 +11,8 @@ const useStyles = makeStyles({
     cardContent: {
         padding: "0 0",
         width: "15vw",
-        height: "5vw",
+        minWidth: "150px",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -30,17 +31,9 @@ const useStyles = makeStyles({
     },
     button: {
         width: "100%",
-        fontSize: "0.9vw",
+        fontSize: "1.5vw",
     },
 })
-
-const correctNames = (name) => {
-    const nameArray = name.split(' ');
-    if (nameArray[0].length > 7) {
-        nameArray[0] = nameArray[0].slice(0, 7) + '.';
-    }
-    return nameArray.join(' ');
-}
 
 const HeaderCard = ( { info, setCurrency } ) => {
     const classes = useStyles();
@@ -49,7 +42,7 @@ const HeaderCard = ( { info, setCurrency } ) => {
     }
     if (!info) return null;
     return (
-        <Card className={classes.card} value={info.Cur_ID}>
+        <Card className={classes.card}>
             <CardContent 
                 classes={{
                     root: classes.cardContent
@@ -60,13 +53,13 @@ const HeaderCard = ( { info, setCurrency } ) => {
                     className={classes.button} 
                     variant="contained" 
                 >
-                    {correctNames(info.Cur_Name)}
+                    {info}
                 </Button>
                 <Divider className={classes.divider} variant="middle" />    
 
                 <TextField 
                     className={classes.input} 
-                    defaultValue={info.Cur_OfficialRate}
+                    defaultValue={ 1 }
                     onChange={handleChange}
                 />
             </CardContent>

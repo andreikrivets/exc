@@ -7,11 +7,13 @@ import './currency-card.css'
 const useStyles = makeStyles({
     card: {
         padding: "0 0",
+        marginBottom: "30px",
     },
     cardContent: {
         padding: "0 0",
         width: "15vw",
-        height: "5vw",
+        minWidth: "150px",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -30,23 +32,15 @@ const useStyles = makeStyles({
     },
     button: {
         width: "100%",
-        fontSize: "0.9vw",
+        fontSize: "1.5vw",
     },
 })
 
-const correctNames = (name) => {
-    const nameArray = name.split(' ');
-    if (nameArray[0].length > 7) {
-        nameArray[0] = nameArray[0].slice(0, 7) + '.';
-    }
-    return nameArray.join(' ');
-}
-
-const CurrencyCard = ({ info, rate }) => {
+const CurrencyCard = ({ info, rate, onSelect }) => {
     const classes = useStyles();
-    if (!info) return null;
+    if (info.length === 0) return null;
     return (
-        <Card className={classes.card} value={info.Cur_ID}>
+        <Card className={classes.card}>
             <CardContent 
                 classes={{
                     root: classes.cardContent
@@ -56,13 +50,14 @@ const CurrencyCard = ({ info, rate }) => {
                     color="primary"
                     className={classes.button} 
                     variant="contained" 
+                    onClick={() => onSelect(info[0])}
                 >
-                    {correctNames(info.Cur_Name)}
+                    {info[0]}
                 </Button>
                 <Divider className={classes.divider} variant="middle" />    
                 <TextField 
                     className={classes.input} 
-                    value={((rate / info.Cur_OfficialRate) * info.Cur_Scale).toFixed(3)}
+                    value={(info[1] * rate).toFixed(3)}
                 />
             </CardContent>
         </Card>
