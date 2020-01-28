@@ -42,8 +42,11 @@ const correctNames = (name) => {
     return nameArray.join(' ');
 }
 
-const CurrencyCard = ({ info, rate }) => {
+const HeaderCard = ( { info, setCurrency } ) => {
     const classes = useStyles();
+    const handleChange = (e) => {
+        setCurrency(e.target.value);
+    }
     if (!info) return null;
     return (
         <Card className={classes.card} value={info.Cur_ID}>
@@ -53,20 +56,22 @@ const CurrencyCard = ({ info, rate }) => {
                 }}
             >
                 <Button 
-                    color="primary"
+                    color="secondary"
                     className={classes.button} 
                     variant="contained" 
                 >
                     {correctNames(info.Cur_Name)}
                 </Button>
                 <Divider className={classes.divider} variant="middle" />    
+
                 <TextField 
                     className={classes.input} 
-                    value={((rate / info.Cur_OfficialRate) * info.Cur_Scale).toFixed(3)}
+                    defaultValue={info.Cur_OfficialRate}
+                    onChange={handleChange}
                 />
             </CardContent>
         </Card>
     )
 }
 
-export default CurrencyCard
+export default HeaderCard;

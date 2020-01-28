@@ -6,6 +6,7 @@ const App = () => {
     const [data, setData] = useState({});
 
     const getCurrencyValue = async () => {
+        console.log('запрос');
         const url = 'http://www.nbrb.by/api/exrates/rates?periodicity=0';
         const resp = await fetch(url);
         const data = await resp.json();
