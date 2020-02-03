@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import uniquid from 'uniquid';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import getCurrencyValue from './getCurrencyValue'
 import CurrenciesList from './currencies-list'
 
 const App = () => {
     const [data, setData] = useState({});
-    let currency = 'USD';
+    const [open, setOpen] = useState(false);
+    const [currency, setCurrency] = useState('USD')
     const [isLoading, setIsLoading] = useState(true);
     const getData = () => {
         setIsLoading(true);
@@ -18,10 +20,13 @@ const App = () => {
             })
         }
 
-    const setCurrency = (e) => {
-        currency = e;
+    const handleChange = (e) => {
+        setOpen(true);
+        setCurrency(e);
         getData();
     }
+
+    const handleClose = () => setOpen(false);
 
     document.addEventListener('DOMContentLoaded', getData);
     if (isLoading) return (
@@ -30,8 +35,9 @@ const App = () => {
         </div>
     ) 
     return (
-        <>
-            <CurrenciesList key={uniquid()} data={data} onSelect={setCurrency} />    
+        <>        
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} message={`switched to ${currency}`} />
+            <CurrenciesList key={uniquid()} data={data} onSelect={handleChange} initialCurrency={currency}/>    
         </>
     )
 }

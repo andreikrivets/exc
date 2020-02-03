@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Card, CardContent, Typography, Divider, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, Divider, TextField } from '@material-ui/core';
 
 import './currency-card.css'
 

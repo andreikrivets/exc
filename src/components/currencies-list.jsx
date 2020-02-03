@@ -26,7 +26,7 @@ const toArray = (data) => {
     return info;
 } 
 
-const CurrenciesList = ({ data, onSelect }) => {
+const CurrenciesList = ({ data, initialCurrency, onSelect }) => {
     const classes = useStyles();
     const [rate, setRate] = useState(1);
     const getCurrentRate = (currentRate) => {
@@ -38,7 +38,7 @@ const CurrenciesList = ({ data, onSelect }) => {
     return (
         <>
             <div className={classes.wrapper}>
-                <HeaderCard info={data.base} setCurrency={getCurrentRate} />
+                <HeaderCard info={initialCurrency} setCurrency={getCurrentRate} />
             </div>
             <div className={classes.wrapper} key={uniquid()}>
             {info.map((el, i) => {
