@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import uniqid from "uniqid";
 import { makeStyles } from "@material-ui/core/styles";
 
-import CurrencyCard from "./currency-card";
-import HeaderCard from "./header-card";
+import CurrencyCard from "../currency-card/currency-card";
+import HeaderCard from "../header-card/header-card";
 
 const useStyles = makeStyles({
   wrapper: {
@@ -21,9 +21,9 @@ const CurrenciesList = ({ data, initialCurrency, onSelect }) => {
     if (currentRate > 0) setRate(currentRate);
     else setRate(0);
   };
-  if (!data.rates) return null;
-  const currencyNames = Object.keys(data.rates);
-  const currencyValues = Object.values(data.rates);
+  if (!data.conversion_rates) return null;
+  const currencyNames = Object.keys(data.conversion_rates);
+  const currencyValues = Object.values(data.conversion_rates);
   return (
     <>
       <div className={classes.wrapper}>
@@ -31,7 +31,7 @@ const CurrenciesList = ({ data, initialCurrency, onSelect }) => {
       </div>
       <div className={classes.wrapper} key={uniqid()}>
         {currencyNames.map((el, i) => {
-          return i < 30 ? (
+          return i < currencyNames.length ? (
             <CurrencyCard
               name={el}
               value={currencyValues[i]}

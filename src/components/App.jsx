@@ -2,20 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Snackbar, CircularProgress } from "@material-ui/core";
 
 import CurrenciesList from "./currencies-list";
-import getCurrencyValue from "./getCurrencyValue";
+import getCurrencyValue from "./data/getCurrencyValue";
 
 const App = () => {
   const [data, setData] = useState({});
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-    getCurrencyValue().then((resp) => {
-      setData(resp);
-      setIsLoading(false);
-    });
-  }, []);
 
   const getData = (curr) => {
     setIsLoading(true);
@@ -25,6 +17,10 @@ const App = () => {
     });
   };
 
+  useEffect(() => {
+    getData("USD");
+  }, []);
+
   const handleChange = (e) => {
     setOpen(true);
     getData(e);
@@ -32,7 +28,7 @@ const App = () => {
 
   const handleClose = () => setOpen(false);
 
-  const circP = (
+  const circProgress = (
     <div
       style={{
         display: "flex",
@@ -45,19 +41,19 @@ const App = () => {
   );
 
   return isLoading ? (
-    circP
+    circProgress
   ) : (
     <>
       <Snackbar
         open={open}
         autoHideDuration={2000}
         onClose={handleClose}
-        message={`switched to ${data.base}`}
+        message={`switched to ${data.base_code}`}
       />
       <CurrenciesList
         data={data}
         onSelect={handleChange}
-        initialCurrency={data.base || "USD"}
+        initialCurrency={data.base_code || "USD"}
       />
     </>
   );
